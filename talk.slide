@@ -1,0 +1,115 @@
+A tour of the gRPC ecosystem with Golang
+25 Jun 2020
+Tags: go golang grpc gateway protobuf http2 rest
+
+Sudersen Archakam
+sudersen@yandex.com
+@sudersens
+Download the demo from github.com/sudersen/talk20
+
+* gRPC? (gRPC Remote Procedure Calls)
+.background grpc.png
+
+- An open source remote procedure call (RPC) system
+
+- HTTP/2 for transport
+
+- Protocol Buffers as the interface description language
+
+* Other technologies
+.image rsc.jpg
+
+* Pros
+
+- Faster serialization and de-serialization due to protobuf
+
+- Contract first again due to protobuf
+
+- Efficient HTTP/2 as transport
+
+- Support for most of the popular languages out there
+
+- Easy plugin of middleware in contract through annotation
+
+* And...
+
+supports all streaming combinations
+- Unary (no streaming)
+- Server to client streaming
+- Client to server streaming
+- Bidirectional streaming
+
+
+* Cons
+
+- No default support by different platform (compensated by codegen)
+
+- No rigid status codes
+
+* gRPC Workflow
+.image wf.jpeg
+
+* Simple Demo!
+
+* Step #1: Define
+.code -numbers sample/sample.proto
+
+* Step #2: Compile
+
+protoc  --proto_path=sample --go_out=plugins=grpc:. sample/sample.proto
+
+*
+.code -numbers sample/sample.pb.go
+
+* Step #3: Implement Server
+.code -numbers sample/sample_server.go  /START OMIT/,/END OMIT/
+
+* Client side
+.code -numbers sample/sample_client.go /^func Read/,/^}/ HLxxx
+
+* Run it!
+.play samplerun/main.go /START OMIT/,/END OMIT/
+
+* How do I migrate existing HTTP service to this?
+
+*
+.image dr.jpg
+
+* GRPC Gateway
+
+* Step #1: Define
+.code -numbers sample/sample.proto /START OMIT/,/END OMIT/
+
+* Step #1: Define
+.code -numbers gateway/gateway.proto /START OMIT/,/END OMIT/
+
+* Step #2: Compile
+.code compile_gateway.sh
+
+* Implement Server
+.code -numbers gateway/gateway_server.go  /START OMIT/,/END OMIT/ HLxxx
+
+* Run it!
+.play gatewayrun/main.go /START OMIT/,/END OMIT/ HLxxx
+
+* What's going on in grpc2http?
+.code -numbers grpc2http/server.go  /START OMIT/,/END OMIT/
+
+* Recommendations
+
+- Use validators in message for more granular control
+.link https://github.com/mwitkow/go-proto-validators
+
+- Use jsonpb library (provided with std protobuf lib by default) for all proto2json conversion
+.link https://pkg.go.dev/github.com/golang/protobuf/jsonpb
+
+* My prod experience
+
+- Concrete contract (Added visibility to Product, QA folks)
+
+- Moved to GRPC with ease thanks to GRPC-Gateway
+
+- ~20% reduction in response time
+
+- ~7% reduction in bandwidth usage
+

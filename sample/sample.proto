@@ -1,0 +1,18 @@
+syntax = "proto3"; // HL
+
+option go_package = "talk20";
+
+// START OMIT
+service SampleService { // HL
+  rpc Read (Request) returns (Response) {
+  };
+}
+// END OMIT
+
+message Request { // HL
+  string id = 1;
+}
+
+message Response { // HL
+  string reply = 1;
+}
