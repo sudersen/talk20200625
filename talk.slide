@@ -5,7 +5,7 @@ Tags: go golang grpc gateway protobuf http2 rest
 Sudersen Archakam
 sudersen@yandex.com
 @sudersens
-Download the demo from github.com/sudersen/talk20
+Download the presentation from [[https://github.com/sudersen/talk20200625][github.com/sudersen/talk20200625]]
 
 * gRPC? (gRPC Remote Procedure Calls)
 .background grpc.png
@@ -61,8 +61,14 @@ protoc  --proto_path=sample --go_out=plugins=grpc:. sample/sample.proto
 *
 .code -numbers sample/sample.pb.go
 
+* Server interface peek
+.code -numbers sample/sample.pb.go /^type SampleServiceServer/,/^}/ HLxxx
+
 * Step #3: Implement Server
 .code -numbers sample/sample_server.go  /START OMIT/,/END OMIT/
+
+* Client interface peek
+.code -numbers sample/sample.pb.go /^type SampleServiceClient/,/^}/ HLxxx
 
 * Client side
 .code -numbers sample/sample_client.go /^func Read/,/^}/ HLxxx
@@ -73,7 +79,7 @@ protoc  --proto_path=sample --go_out=plugins=grpc:. sample/sample.proto
 * How do I migrate existing HTTP service to this?
 
 *
-.image dr.jpg
+.video drumsroll.mp4 video/mp4 400 500
 
 * GRPC Gateway
 
@@ -82,6 +88,9 @@ protoc  --proto_path=sample --go_out=plugins=grpc:. sample/sample.proto
 
 * Step #1: Define
 .code -numbers gateway/gateway.proto /START OMIT/,/END OMIT/
+
+* Step #1: Define
+.code -numbers gateway/gateway.proto
 
 * Step #2: Compile
 .code compile_gateway.sh

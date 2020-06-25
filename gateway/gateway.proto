@@ -2,7 +2,7 @@ syntax = "proto3";
 
 option go_package = "talk20";
 import "google/api/annotations.proto";
-
+import "github.com/mwitkow/go-proto-validators/validator.proto";
 
 
 // START OMIT
@@ -17,9 +17,9 @@ service SampleService {
 // END OMIT
 
 message Request {
-  string id = 1;
+  string id = 1 [json_name="id"];
 }
 
 message Response {
-  string reply = 1;
+  string reply = 1 [(validator.field) = {msg_exists : true}, json_name="reply"];
 }
